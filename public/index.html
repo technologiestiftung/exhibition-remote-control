@@ -14,7 +14,7 @@
 
       <v-main>
         <v-container>
-          <h1>Exhibition Remote Control</h1>
+          <h1>CityLAB Berlin Exhibition Remote Control</h1>
 
           <v-alert v-if="toggleState && !countdownActive" type="warning">
             Vor dem Ausschalten der Ausstellung unbedingt Projektoren manuell abschalten!
@@ -23,7 +23,7 @@
             Nicht ausschalten, während die Rechner hochfahren. Warten.
           </v-alert>
 
-          <v-switch v-model="toggleState" :disabled="countdownActive">
+          <v-switch class="super-large" v-model="toggleState" :disabled="countdownActive">
             <template v-slot:label>
               Gesamte Ausstellung <v-progress-circular class="no-transition ml-2" v-if="countdownActive" :value="pgvalue * 100" size="24"></v-progress-circular>
             </template>

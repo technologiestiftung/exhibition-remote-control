@@ -13,7 +13,7 @@ var vm = new Vue({
       // console.log("exhibition changed" + state)
 
       if (state) this.startCountdown();
-      this.$socket.sendObj({'exhibitionState': state})
+      this.$socket.sendObj({'exhibition': state})
     }
   },
   methods : {
