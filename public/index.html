@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exhibition Remote Control</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div id="app">
+    <v-app>
+
+      <v-main>
+        <v-container>
+          <h1>Exhibition Remote Control</h1>
+
+          <v-alert v-if="toggleState && !countdownActive" type="warning">
+            Vor dem Ausschalten der Ausstellung unbedingt Projektoren manuell abschalten!
+          </v-alert>
+          <v-alert v-if="toggleState && countdownActive" type="info">
+            Nicht ausschalten, während die Rechner hochfahren. Warten.
+          </v-alert>
+
+          <v-switch v-model="toggleState" :disabled="countdownActive">
+            <template v-slot:label>
+              Gesamte Ausstellung <v-progress-circular class="no-transition ml-2" v-if="countdownActive" :value="pgvalue * 100" size="24"></v-progress-circular>
+            </template>
+          </v-switch>
+        </v-container>
+      </v-main>
+
+    </v-app>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-native-websocket@2.0.14/dist/build.min.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
