@@ -2,7 +2,6 @@ require('dotenv').config()
 const express = require('express');
 const app = express();
 const http = require('http');
-const WebSocket = require('ws');
 const basicAuth = require('express-basic-auth');
 
 const tplink = new (require('tplink-smarthome-api').Client)()
@@ -18,8 +17,7 @@ for (const ip of config.plugs) {
 //initialize a simple http server
 const server = http.createServer(app);
 
-//initialize the WebSocket server instance
-const wss = new WebSocket.Server({ server });
+var io = require('socket.io').listen(server);
 
 let state = {
   'exhibition': false
@@ -33,19 +31,26 @@ function parseMessage(str) {
   }
 }
 
-wss.on('connection', (ws) => {
-  // console.log('websocket connected')
+io.on('connection', (socket) => {
+  console.log('socket.io client connected')
 
-  // ws.send(state);
+  socket.emit('state', state)
 
-  ws.on('message', (message) => {
-      state = parseMessage(message)
+  // ws.send(JSON.stringify(state));
 
-      let i = 0
-      for (const plug of plugs) {
-        setTimeout(() => plug.setPowerState(state.exhibition), i * 1000); // staggered on/off
-        i++
-      }
+  socket.on('state', (data) => {
+    console.log("new state received")
+    // state = parseMessage(data)
+    // console.log(data)
+    state = data
+
+    let i = 0
+    for (const plug of plugs) {
+      setTimeout(() => plug.setPowerState(state.exhibition), i * 1000); // staggered on/off
+      i++
+    }
+
+    io.emit('state', state);
 
   });
 

@@ -1,20 +1,37 @@
-Vue.use(VueNativeSock.default, 'ws://localhost:80', {
-  reconnection: true, // (Boolean) whether to reconnect automatically (false)
-  reconnectionAttempts: 5, // (Number) number of reconnection attempts before giving up (Infinity),
-  reconnectionDelay: 3000, // (Number) how long to initially wait before attempting a new (1000)
-  format: 'json'
-})
+// Vue.use(VueNativeSock.default, 'ws://localhost:80', {
+//   reconnection: true, // (Boolean) whether to reconnect automatically (false)
+//   reconnectionAttempts: 5, // (Number) number of reconnection attempts before giving up (Infinity),
+//   reconnectionDelay: 3000, // (Number) how long to initially wait before attempting a new (1000)
+//   format: 'json'
+// })
+
+const socket = io();
 
 var vm = new Vue({
   el: '#app',
   vuetify: new Vuetify(),
   watch: {
-    toggleState: function(state) {
-      // console.log("exhibition changed" + state)
+    'state.exhibition' : function(state) {
+      this.startCountdown();
+    },
+    // state: function(_state) {
+    //   // this.$socket.sendObj(_state)
+    //   socket.emit('socket', _state)
+    // }
+  },
+  mounted : function () {
 
-      if (state) this.startCountdown();
-      this.$socket.sendObj({'exhibition': state})
-    }
+    socket.on('state', data => {
+      // this.withoutWatchers(() => {
+        console.log('new state received')
+        this.state = data
+      // })
+    });
+
+    // this.$options.sockets.onmessage = (message) => {
+    //   this.state = JSON.parse(message.data)
+    //   // console.log()
+    // }
   },
   methods : {
     startCountdown: function() {
@@ -30,6 +47,10 @@ var vm = new Vue({
         }
         // console.log(this.pgvalue)
       }, 50);
+    },
+    sendState: function() {
+      socket.emit('state', this.state)
+      console.log('new state sent')
     }
   },
   computed : {
@@ -42,7 +63,9 @@ var vm = new Vue({
   },
   data : function () {
     return {
-      toggleState : false,
+      state : {
+        exhibition : false
+      },
       // message : '',
       pgvalue : 0,
       lastSwitchOn : null,
