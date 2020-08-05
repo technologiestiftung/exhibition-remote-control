@@ -16,18 +16,24 @@
         <v-container>
           <h1>CityLAB Berlin Exhibition Remote Control</h1>
 
-          <v-alert v-if="state.exhibition && !countdownActive" type="warning">
+          <p v-if="isFetching" >
+            Warte auf Server …
+          </p>
+          <div v-else>
+
+          <v-alert v-if="mainToggle.state && !mainToggle.countdownActive" type="warning">
             Vor dem Ausschalten der Ausstellung unbedingt Projektoren manuell abschalten!
           </v-alert>
-          <v-alert v-if="state.exhibition && countdownActive" type="info">
+          <v-alert v-if="mainToggle.state && mainToggle.countdownActive" type="info">
             Nicht ausschalten, während die Rechner hochfahren. Warten.
           </v-alert>
 
-          <v-switch class="super-large" v-model="state.exhibition" @change="sendState()" :disabled="countdownActive">
+          <v-switch class="super-large" v-model="mainToggle.state" @change="sendState(mainToggle)" :disabled="mainToggle.countdownActive">
             <template v-slot:label>
-              Gesamte Ausstellung <v-progress-circular class="no-transition ml-2" v-if="countdownActive" :value="pgvalue * 100" size="24"></v-progress-circular>
+              Gesamte Ausstellung <v-progress-circular class="no-transition ml-2" v-if="mainToggle.countdownActive" :value="mainToggle.pgvalue * 100" size="24"></v-progress-circular>
             </template>
           </v-switch>
+          </div>
         </v-container>
       </v-main>
 
@@ -37,7 +43,9 @@
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
   <!-- <script src="https://cdn.jsdelivr.net/npm/vue-native-websocket@2.0.14/dist/build.min.js"></script> -->
-  <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2.3.0/dist/socket.io.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2.3.0/dist/socket.io.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/vue-socket.io@3.0.10/dist/vue-socketio.js"></script>
+
   <script src="script.js"></script>
 
 </body>
