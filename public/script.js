@@ -1,7 +1,7 @@
 Vue.use(
   new VueSocketIO({
     debug: true,
-    connection: "localhost:80",
+    connection: window.location.href,
   })
 );
 
