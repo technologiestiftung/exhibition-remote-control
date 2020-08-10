@@ -20,7 +20,7 @@ const server = http.createServer(app);
 
 var io = require('socket.io').listen(server);
 
-const minutesBeforeNextToggle = 0.1
+const minutesBeforeNextToggle = process.env.EXPECTED_BOOT_DURATION_IN_MIN || 3
 const milliSecondsBeforeRestart = minutesBeforeNextToggle * 60 * 1000
 let intervalid
 
