@@ -21,9 +21,20 @@ const server = http.createServer(app);
 
 var io = require("socket.io").listen(server);
 
-const minutesBeforeNextToggle = 0.1;
-const milliSecondsBeforeRestart = minutesBeforeNextToggle * 60 * 1000;
-let intervalid;
+const minutesBeforeNextToggle = process.env.EXPECTED_BOOT_DURATION_IN_MIN || 3
+const milliSecondsBeforeRestart = minutesBeforeNextToggle * 60 * 1000
+let intervalid
+
+let _store = {
+  toggles : {
+    exhibition : {
+      state : false,
+      countdownActive : false,
+      pgvalue : 0,
+      lastSwitchOn : null
+    }
+  }
+}
 
 const _store = {
   toggles: {
