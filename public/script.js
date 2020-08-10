@@ -5,7 +5,7 @@ Vue.use(
   })
 );
 
-const vm = new Vue({
+new Vue({
   el: "#app",
   vuetify: new Vuetify(),
   sockets: {
