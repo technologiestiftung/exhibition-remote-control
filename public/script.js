@@ -1,23 +1,41 @@
 Vue.use(new VueSocketIO({
-    debug: true,
-    connection: 'localhost:80'
-  })
+  debug: true,
+  connection: 'localhost:80'
+})
 );
 
-var vm = new Vue({
+const vm = new Vue({
   el: '#app',
   vuetify: new Vuetify(),
   sockets: {
     connect: function () {
-      console.log('socket connected')
+      console.log('socket connected');
     },
     toggles: function (data) {
-      console.log('new toggles received')
+      console.log('new toggles received');
 
-      this.toggles = data
+      this.toggles = data;
 
       // this._data = data
-      this.isFetching = false
+      this.isFetching = false;
+    }
+  },
+  data() {
+    return {
+      isFetching: true,
+      toggles: {
+        exhibition: {
+          state: false,
+          countdownActive: false,
+          pgvalue: 0,
+          lastSwitchOn: null
+        }
+      }
+    };
+  },
+  computed: {
+    mainToggle() {
+      return this.toggles.exhibition;
     }
   },
   mounted() {
@@ -25,28 +43,10 @@ var vm = new Vue({
 
     // throw new Error('Oops');
   },
-  methods : {
-    sendState: function(toggle) {
-      console.log('sending toggles')
-      this.$socket.emit('toggles', this.toggles)
-    }
-  },
-  computed : {
-    mainToggle() {
-      return this.toggles.exhibition
-    }
-  },
-  data() {
-    return {
-      isFetching : true,
-      toggles : {
-        exhibition : {
-          state : false,
-          countdownActive : false,
-          pgvalue : 0,
-          lastSwitchOn : null
-        }
-      }
+  methods: {
+    sendState: function (toggle) {
+      console.log('sending toggles');
+      this.$socket.emit('toggles', this.toggles);
     }
   }
-})
+});
