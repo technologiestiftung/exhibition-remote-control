@@ -1,24 +1,25 @@
-Vue.use(new VueSocketIO({
-  debug: true,
-  connection: 'localhost:80'
-})
+Vue.use(
+  new VueSocketIO({
+    debug: true,
+    connection: "localhost:80",
+  })
 );
 
 const vm = new Vue({
-  el: '#app',
+  el: "#app",
   vuetify: new Vuetify(),
   sockets: {
     connect: function () {
-      console.log('socket connected');
+      console.log("socket connected");
     },
     toggles: function (data) {
-      console.log('new toggles received');
+      console.log("new toggles received");
 
       this.toggles = data;
 
       // this._data = data
       this.isFetching = false;
-    }
+    },
   },
   data() {
     return {
@@ -28,25 +29,23 @@ const vm = new Vue({
           state: false,
           countdownActive: false,
           pgvalue: 0,
-          lastSwitchOn: null
-        }
-      }
+          lastSwitchOn: null,
+        },
+      },
     };
   },
   computed: {
     mainToggle() {
       return this.toggles.exhibition;
-    }
+    },
   },
   mounted() {
-
-
     // throw new Error('Oops');
   },
   methods: {
     sendState: function (toggle) {
-      console.log('sending toggles');
-      this.$socket.emit('toggles', this.toggles);
-    }
-  }
+      console.log("sending toggles");
+      this.$socket.emit("toggles", this.toggles);
+    },
+  },
 });

@@ -22,7 +22,6 @@ We're using TP-Link HS100 smart power plugs to hard-switch on/off all devices. T
 - Install [Node.js](https://nodejs.org/en/)
 - Add smart plugs to your network. **Be aware:** TP-Link plugs don't allow set static IP addresses. Make sure to fix IPs for those devices in your router config using their MAC addresses.
 
-
 ### Install / Setup
 
 1. Clone the repository and run `npm install`.
@@ -32,6 +31,7 @@ We're using TP-Link HS100 smart power plugs to hard-switch on/off all devices. T
 5. To start the script on boot add this script to [rc.local](https://www.raspberrypi.org/documentation/linux/usage/rc-local.md)
 
 ## Todo:
+
 - Properly shut down PCs (using this: [Windows PCs](https://www.howtogeek.com/109655/how-to-remotely-shut-down-or-restart-windows-pcs/), [Windows PCs](https://lifehacker.com/shut-down-your-windows-pc-remotely-from-linux-5275652), [Linux PCs](https://www.cyberciti.biz/faq/remote-shutdown-linux-computer-from-the-cli/)) and ensure PCs have shut down (using ping) before turning off smart switches.
 - Turn off projectors before shutdown
 - Poll smart plug state

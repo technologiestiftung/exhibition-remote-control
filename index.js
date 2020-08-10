@@ -1,15 +1,15 @@
 // @ts-check
-require('dotenv').config();
-const onChange = require('on-change');
-const express = require('express');
+require("dotenv").config();
+const onChange = require("on-change");
+const express = require("express");
 const app = express();
-const http = require('http');
-const basicAuth = require('express-basic-auth');
+const http = require("http");
+const basicAuth = require("express-basic-auth");
 
-const tplink = new (require('tplink-smarthome-api').Client)();
+const tplink = new (require("tplink-smarthome-api").Client)();
 
 // load IPs from config. Alternatively, startDiscovery() could be used.
-const config = require('./config.json');
+const config = require("./config.json");
 
 const plugs = [];
 for (const ip of config.plugs) {
@@ -19,7 +19,7 @@ for (const ip of config.plugs) {
 // initialize a simple http server
 const server = http.createServer(app);
 
-var io = require('socket.io').listen(server);
+var io = require("socket.io").listen(server);
 
 const minutesBeforeNextToggle = 0.1;
 const milliSecondsBeforeRestart = minutesBeforeNextToggle * 60 * 1000;
@@ -31,11 +31,10 @@ const _store = {
       state: false,
       countdownActive: false,
       pgvalue: 0,
-      lastSwitchOn: null
-    }
-  }
+      lastSwitchOn: null,
+    },
+  },
 };
-
 
 const store = onChange(_store, function (path, value, previousValue) {
   // console.log('this:', this);
@@ -45,7 +44,6 @@ const store = onChange(_store, function (path, value, previousValue) {
 
   // TODO : handle this in receiving toggle changes
   if (path === "toggles.exhibition.state" && value !== previousValue) {
-
     let i = 0;
     for (const plug of plugs) {
       // console.log(plug, value)
@@ -57,7 +55,7 @@ const store = onChange(_store, function (path, value, previousValue) {
   }
 
   // console.log("updating all devices")
-  io.emit('toggles', store.toggles);
+  io.emit("toggles", store.toggles);
 });
 
 function startCountdown() {
@@ -67,11 +65,11 @@ function startCountdown() {
   toggle.countdownActive = true;
 
   intervalid = setInterval(() => {
-
     // console.log('toggle.lastSwitchOn ',toggle.lastSwitchOn)
     //
     // The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type. @jvolker
-    toggle.pgvalue = (new Date() - toggle.lastSwitchOn) / milliSecondsBeforeRestart;
+    toggle.pgvalue =
+      (new Date() - toggle.lastSwitchOn) / milliSecondsBeforeRestart;
 
     if (toggle.pgvalue > 1) {
       // console.log("stop")
@@ -82,19 +80,18 @@ function startCountdown() {
   }, 50);
 }
 
-io.on('connection', (socket) => {
-  console.log('socket.io client connected');
+io.on("connection", (socket) => {
+  console.log("socket.io client connected");
 
-  socket.emit('toggles', store.toggles);
+  socket.emit("toggles", store.toggles);
 
-  socket.on('toggles', (data) => {
+  socket.on("toggles", (data) => {
     console.log("new toggles received");
 
     for (const key in data) {
       store.toggles[key].state = data[key].state;
     }
   });
-
 });
 
 // start our server
@@ -105,8 +102,10 @@ server.listen(process.env.PORT || 80, () => {
 const users = {};
 users[process.env.USER_NAME] = process.env.PASSWORD;
 
-app.use(basicAuth({
-  users: users,
-  challenge: true
-}));
-app.use(express.static('public'));
+app.use(
+  basicAuth({
+    users: users,
+    challenge: true,
+  })
+);
+app.use(express.static("public"));
