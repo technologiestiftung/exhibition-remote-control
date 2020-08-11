@@ -2,10 +2,10 @@
   "name": "exhibition-remote-control",
   "version": "0.1.0",
   "description": "Control for Citylab Exhibition",
-  "main": "index.js",
+  "main": "backend/index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node -r dotenv/config backend/index.js",
+    "test": "jest",
     "lint": "eslint \"./**/*.{js,vue}\" --fix",
     "prettier": "prettier --write ./*"
   },
@@ -25,6 +25,8 @@
     "eslint-config-vue": "2.0.2",
     "eslint-plugin-prettier": "3.1.4",
     "eslint-plugin-vue": "7.0.0-beta.2",
+    "jest": "26.3.0",
+    "jest-in-case": "1.0.2",
     "prettier": "2.0.5"
   }
 }
