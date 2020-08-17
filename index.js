@@ -1,5 +1,6 @@
 // @ts-check
-require("dotenv").config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const onChange = require("on-change");
 const express = require("express");
 const app = express();

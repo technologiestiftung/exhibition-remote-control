@@ -28,7 +28,7 @@ We're using TP-Link HS100 smart power plugs to hard-switch on/off all devices. T
 2. Then run `npm start` to start the server.
 3. Point your browser to the web interface using the severs IP address and port, eg. `http://192.168.0.10:80`
 4. Configuration: Copy `.env-sample` to `.env` and change the credentials. Use `config.json` to change the IPs of your plugs.
-5. To start the script on boot add this script to [rc.local](https://www.raspberrypi.org/documentation/linux/usage/rc-local.md), eg.: `sudo node /home/pi/exhibition-remote-control/index.js &` 
+5. To start the script on boot add this script to [rc.local](https://www.raspberrypi.org/documentation/linux/usage/rc-local.md), eg.: `sudo node /home/pi/exhibition-remote-control/index.js &` or use a process manager like [pm2](https://pm2.keymetrics.io/).
 
 ## Todo:
 
