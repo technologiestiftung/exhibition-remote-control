@@ -15,3 +15,15 @@ h1 {
   transform: scale(2.5);
   transform-origin: left top;
 }
+
+@media only screen and (max-device-width: 550px) {
+
+    .super-large {
+      transform: scale(1.5);
+    }
+
+}
+
+#logo {
+  margin-top: 1em;
+}
