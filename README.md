@@ -13,7 +13,7 @@ We're using TP-Link HS100 smart power plugs to hard-switch on/off all devices. T
 - The UI is password protected.
 - Multiple instances of the UI are synchronized and live-updated.
 
-![image](https://user-images.githubusercontent.com/546852/89304466-bedaa180-d66d-11ea-8ebb-d10a3527b57e.png)
+![image](https://user-images.githubusercontent.com/546852/90528986-82ca3500-e173-11ea-9313-f3384a3e1813.png)
 
 ## Usage
 
